@@ -1,3 +1,5 @@
+import {colors} from '@theme/colors';
+import {fonts} from '@theme/fonts';
 import styled from 'styled-components/native';
 import {StyledProps} from '../../interfaces/Theme';
 
@@ -6,10 +8,10 @@ export const Container = styled.View`
 `;
 
 export const TextBackground = styled.View`
-  background-color: ${(props: StyledProps) => props.theme.colors.bg.primary};
+  background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};
   border-radius: 50px;
   height: 56px;
-  padding-horizontal: ${(props: StyledProps) => props.theme.spacings.XXL};
+  padding-horizontal: ${({theme}: StyledProps) => theme.spacings.XXL};
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -23,10 +25,17 @@ export const TextBackground = styled.View`
 export const SearchText = styled.TextInput`
   flex: 1;
   font-size: 18px;
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
   top: 2px;
-  background-color: 'white';
+  background-color: white;
   color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
 `;
+
+export const placeholderStyle = {
+  fontFamily: fonts.ralewayBold,
+  fontSize: 16,
+  color: colors.text.placeholder,
+};
 
 export const flatListStyle = {
   backgroundColor: '#fff',

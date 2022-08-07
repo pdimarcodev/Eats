@@ -1,9 +1,11 @@
-import {Colors} from '../theme/colors';
-import {Spacings} from '../theme/spacings';
+import {FontType} from '@theme/fonts';
+import {ColorType} from '@theme/colors';
+import {SpacingType} from '@theme/spacings';
 
 export interface Theme {
-  colors: Colors;
-  spacings: Spacings;
+  colors: ColorType;
+  fonts: FontType;
+  spacings: SpacingType;
 }
 
 export interface StyledProps {

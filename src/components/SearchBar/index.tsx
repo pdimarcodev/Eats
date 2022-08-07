@@ -16,6 +16,7 @@ import {
   TextBackground,
 } from './styles';
 import {Icon} from '@components/Icon';
+import {colors} from '@theme/colors';
 
 interface SearchBarProps {
   value: string;
@@ -77,7 +78,7 @@ export const SearchBar: FC<SearchBarProps> = ({
       <TextBackground>
         <SearchText
           placeholder={placeholder}
-          placeholderTextColor="gray"
+          placeholderTextColor={colors.text.placeholder}
           autoCapitalize="words"
           returnKeyType="search"
           value={value}
