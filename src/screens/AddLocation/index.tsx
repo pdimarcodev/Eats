@@ -33,7 +33,7 @@ export const AddLocationScreen = () => {
 
   const onChangeText = async () => {
     if (search.term.trim() === '') {
-      return;
+      onClearSearch();
     }
     if (!search.fetchPredictions) {
       return;
@@ -60,6 +60,34 @@ export const AddLocationScreen = () => {
 
   useDebounce(onChangeText, 300, [search.term]);
 
+  const onSelection = async (placeId: string, description: string) => {
+    try {
+      const result = await googlePlacesApi.request({
+        method: 'get',
+        url: `/details/json?place_id=${placeId}&key=${GOOGLE_API_KEY}`,
+      });
+      if (result) {
+        const {
+          data: {
+            result: {
+              geometry: {location},
+            },
+          },
+        } = result;
+        const {lat, lng} = location;
+        setShowPredictions(false);
+        setSearch({term: description, fetchPredictions: false});
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onClearSearch = () => {
+    setShowPredictions(false);
+    setSearch({term: '', fetchPredictions: false});
+  };
+
   useEffect(() => {
     checkLocationPermissions();
   }, []);
@@ -77,8 +105,10 @@ export const AddLocationScreen = () => {
         onChangeText={(text: string) => {
           setSearch({term: text, fetchPredictions: true});
         }}
-        // showPredictions={showPredictions}
-        // predictions={predictions}
+        showData={showPredictions}
+        data={predictions}
+        onClearSearch={onClearSearch}
+        onSelection={onSelection}
       />
     </Container>
   );

@@ -6,9 +6,9 @@ export const Container = styled.View`
 `;
 
 export const TextBackground = styled.View`
-  background-color: ${(props: StyledProps) => props.theme.colors.bg.tertiary};
+  background-color: ${(props: StyledProps) => props.theme.colors.bg.primary};
   border-radius: 50px;
-  height: 40px;
+  height: 56px;
   padding-horizontal: ${(props: StyledProps) => props.theme.spacings.XXL};
   flex-direction: row;
   justify-content: center;
@@ -24,8 +24,51 @@ export const SearchText = styled.TextInput`
   flex: 1;
   font-size: 18px;
   top: 2px;
+  background-color: 'white';
+  color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
 `;
 
-export const FoundCityButton = styled.TouchableOpacity``;
+export const flatListStyle = {
+  backgroundColor: '#fff',
+  marginTop: 10,
+};
 
-export const FoundCity = styled.TextInput``;
+export const ListItemWrapper = styled.Pressable`
+  justify-content: center;
+  padding-horizontal: 16px;
+  height: 56px;
+`;
+
+export const ListItemMain = styled.Text`
+  color: ${({theme}: StyledProps) => theme.colors.text.primary};
+  font-size: 18px;
+`;
+
+export const ListItemSecondary = styled.Text`
+  color: ${({theme}: StyledProps) => theme.colors.text.quaternary};
+  font-size: 12px;
+`;
+
+export const ListItemSeparator = styled.View`
+  border-bottom-color: ${({theme}: StyledProps) =>
+    theme.colors.text.quaternary};
+  border-bottom-width: 1px;
+`;
+
+export const ListFooterWrapper = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+`;
+
+export const ListFooter = styled.Text`
+  color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
+  font-size: 18px;
+  margin-left: 5px;
+`;
+
+export const ListFooterIcon = styled.Image`
+  width: 22px;
+  height: 22px;
+`;

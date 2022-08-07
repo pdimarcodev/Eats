@@ -1,39 +1,93 @@
-import {Prediction} from '@interfaces';
 import {FC} from 'react';
+import {FlatList, Pressable} from 'react-native';
+import {Prediction} from '@interfaces';
 
-import {Container, SearchText, TextBackground} from './styles';
+import {
+  Container,
+  flatListStyle,
+  ListFooter,
+  ListFooterIcon,
+  ListFooterWrapper,
+  ListItemMain,
+  ListItemSecondary,
+  ListItemSeparator,
+  ListItemWrapper,
+  SearchText,
+  TextBackground,
+} from './styles';
+import {Icon} from '@components/Icon';
 
 interface SearchBarProps {
-  //   query: string;
-  //   setQuery: Dispatch<SetStateAction<string>>;
   value: string;
   placeholder: string;
-  //   predictions: Prediction[];
-  //   showPredictions: boolean;
-  //   onPredictionTapped: (placeId: string, description: string) => void;
+  data: Prediction[];
+  showData: boolean;
   onChangeText: (text: string) => void;
+  onClearSearch: () => void;
+  onSelection: (key: string, value: string) => void;
 }
+
+const ListFooterComponent: FC = () => (
+  <>
+    <ListItemSeparator />
+    <ListFooterWrapper>
+      <ListFooterIcon source={require('../../../assets/images/target.png')} />
+      <ListFooter>Busca por ubicación</ListFooter>
+    </ListFooterWrapper>
+  </>
+);
 
 export const SearchBar: FC<SearchBarProps> = ({
   value,
   placeholder,
+  data,
+  showData,
   onChangeText,
-  //   predictions
+  onClearSearch,
+  onSelection,
 }) => {
+  const renderItems = () => {
+    return (
+      <FlatList
+        data={data}
+        renderItem={({item}) => {
+          return (
+            <ListItemWrapper
+              onPress={() => onSelection(item.place_id, item.description)}>
+              <ListItemMain numberOfLines={1}>
+                {item.description.split(',')[0]}
+              </ListItemMain>
+              <ListItemSecondary numberOfLines={1}>
+                {item.description.split(',').slice(1).join(',').trim()}
+              </ListItemSecondary>
+            </ListItemWrapper>
+          );
+        }}
+        ItemSeparatorComponent={() => <ListItemSeparator />}
+        ListFooterComponent={() => <ListFooterComponent />}
+        keyExtractor={item => item.place_id}
+        keyboardShouldPersistTaps="handled"
+        style={flatListStyle}
+      />
+    );
+  };
+
   return (
     <Container>
       <TextBackground>
         <SearchText
           placeholder={placeholder}
           placeholderTextColor="gray"
-          //   autoCapitalize="none"
-          //   autoCorrect={false}
+          autoCapitalize="words"
           returnKeyType="search"
           value={value}
           onChangeText={onChangeText}
         />
-        {/* <Icon name="search-outline" color="grey" size={30} /> */}
+        <Pressable onPress={onClearSearch} hitSlop={5}>
+          <Icon name="Clear" size={19} />
+        </Pressable>
       </TextBackground>
+      {showData && renderItems()}
     </Container>
   );
 };
