@@ -1,19 +1,27 @@
 import {useEffect, useState} from 'react';
 import {Alert, Platform} from 'react-native';
 import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
+import {GOOGLE_API_KEY} from 'react-native-dotenv';
 
 import {Map} from '@components/Map';
 import {Spinner} from '@components/Spinner';
-import {Container} from './styles';
+import {Container, HeaderWrapper, Title} from './styles';
 import {Prediction} from '@interfaces/Prediction';
-import {GOOGLE_API_KEY} from 'react-native-dotenv';
 import googlePlacesApi from '@client/googlePlaces';
 import {SearchBar} from '@components/SearchBar';
-
 import {useDebounce} from '@hooks';
+import {Location} from '@interfaces';
+import {Keyboard} from 'react-native';
+import {Icon} from '@components/Icon';
+import {colors} from '@theme/colors';
+import {StatusBarComponent} from '@components/StatusBar';
 
 export const AddLocationScreen = () => {
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
+  const [selectedLocation, setSelectedLocation] = useState<Location>({
+    latitude: 0,
+    longitude: 0,
+  });
   const [search, setSearch] = useState({term: '', fetchPredictions: false});
   const [showPredictions, setShowPredictions] = useState(false);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
@@ -45,12 +53,8 @@ export const AddLocationScreen = () => {
         url: `/autocomplete/json?input=${search.term}&key=${GOOGLE_API_KEY}`,
       });
       if (result) {
-        // const {
-        //   data: {predictions},
-        // } = result;
         setPredictions(result.data.predictions);
         console.log(result.data.predictions);
-
         setShowPredictions(true);
       }
     } catch (e) {
@@ -75,6 +79,7 @@ export const AddLocationScreen = () => {
           },
         } = result;
         const {lat, lng} = location;
+        setSelectedLocation({latitude: lat, longitude: lng});
         setShowPredictions(false);
         setSearch({term: description, fetchPredictions: false});
       }
@@ -97,19 +102,26 @@ export const AddLocationScreen = () => {
   }
 
   return (
-    <Container>
-      {/* <Map /> */}
-      <SearchBar
-        value={search.term}
-        placeholder={'Escribe tu dirección'}
-        onChangeText={(text: string) => {
-          setSearch({term: text, fetchPredictions: true});
-        }}
-        showData={showPredictions}
-        data={predictions}
-        onClearSearch={onClearSearch}
-        onSelection={onSelection}
-      />
-    </Container>
+    <>
+      <StatusBarComponent backgroundColor={colors.bg.secondary} />
+      <Container onPress={() => Keyboard.dismiss()}>
+        <HeaderWrapper>
+          <Icon name="AddAddress" size={22} />
+          <Title>Agregar dirección de entrega</Title>
+        </HeaderWrapper>
+        <SearchBar
+          value={search.term}
+          placeholder={'Escribe tu dirección'}
+          onChangeText={(text: string) => {
+            setSearch({term: text, fetchPredictions: true});
+          }}
+          showData={showPredictions}
+          data={predictions}
+          onClearSearch={onClearSearch}
+          onSelection={onSelection}
+        />
+        <Map selectedLocation={selectedLocation} />
+      </Container>
+    </>
   );
 };

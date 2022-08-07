@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import {StyledProps} from '../../interfaces/Theme';
 
 export const Container = styled.View`
-  margin-top: 200;
+  margin-top: -28px;
 `;
 
 export const TextBackground = styled.View`
