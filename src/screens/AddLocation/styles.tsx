@@ -3,11 +3,11 @@ import {StyledProps} from '@interfaces';
 import {StyleSheet} from 'react-native';
 
 export const Container = styled.View({
-  ...StyleSheet.absoluteFillObject,
-  height: 400,
-  width: 400,
-  justifyContent: 'flex-end',
-  alignItems: 'center',
+  // ...StyleSheet.absoluteFillObject,
+  // height: 400,
+  // width: 400,
+
+  flex: 1,
 });
 
 export const styles = StyleSheet.create({

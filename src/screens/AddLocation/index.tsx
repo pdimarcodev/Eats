@@ -5,9 +5,18 @@ import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {Map} from '@components/Map';
 import {Spinner} from '@components/Spinner';
 import {Container} from './styles';
+import {Prediction} from '@interfaces/Prediction';
+import {GOOGLE_API_KEY} from 'react-native-dotenv';
+import googlePlacesApi from '@client/googlePlaces';
+import {SearchBar} from '@components/SearchBar';
+
+import {useDebounce} from '@hooks';
 
 export const AddLocationScreen = () => {
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
+  const [search, setSearch] = useState({term: '', fetchPredictions: false});
+  const [showPredictions, setShowPredictions] = useState(false);
+  const [predictions, setPredictions] = useState<Prediction[]>([]);
 
   const checkLocationPermissions = async () => {
     const permission =
@@ -22,6 +31,35 @@ export const AddLocationScreen = () => {
     }
   };
 
+  const onChangeText = async () => {
+    if (search.term.trim() === '') {
+      return;
+    }
+    if (!search.fetchPredictions) {
+      return;
+    }
+
+    try {
+      const result = await googlePlacesApi.request({
+        method: 'get',
+        url: `/autocomplete/json?input=${search.term}&key=${GOOGLE_API_KEY}`,
+      });
+      if (result) {
+        // const {
+        //   data: {predictions},
+        // } = result;
+        setPredictions(result.data.predictions);
+        console.log(result.data.predictions);
+
+        setShowPredictions(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useDebounce(onChangeText, 300, [search.term]);
+
   useEffect(() => {
     checkLocationPermissions();
   }, []);
@@ -32,7 +70,16 @@ export const AddLocationScreen = () => {
 
   return (
     <Container>
-      <Map />
+      {/* <Map /> */}
+      <SearchBar
+        value={search.term}
+        placeholder={'Escribe tu dirección'}
+        onChangeText={(text: string) => {
+          setSearch({term: text, fetchPredictions: true});
+        }}
+        // showPredictions={showPredictions}
+        // predictions={predictions}
+      />
     </Container>
   );
 };
