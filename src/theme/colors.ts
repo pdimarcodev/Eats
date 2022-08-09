@@ -13,6 +13,8 @@ export const colors = {
     primary: '#FFFFFF',
     secondary: '#D4F9F5',
     tertiary: '#FFFFFF',
+    quaternary: '#00BAA4',
+    quinary: '#F2F2F2',
   },
   text: {
     primary: '#000000',

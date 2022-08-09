@@ -4,7 +4,7 @@ import {StyledProps} from '@interfaces';
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
-  color: ${({theme}: StyledProps) => theme.colors.bg.primary};
+  color: ${({theme}: StyledProps) => theme.colors.bg.quinary};
 `;
 
 export const Title = styled.Text`
