@@ -37,3 +37,20 @@ export const HandImage = styled.Image`
   bottom: 0;
   right: 30px;
 `;
+
+export const AddAddress = styled.View`
+  height: 60px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  background-color: ${({theme}: StyledProps) => theme.colors.bg.secondary};
+`;
+
+export const AddAddressText = styled.Text`
+  font-size: 18px;
+  margin-left: 10px;
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayLight};
+  color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
+`;

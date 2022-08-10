@@ -1,7 +1,10 @@
+import {Icon} from '@components/Icon';
 import {StatusBarComponent} from '@components/StatusBar';
 import {colors} from '@theme/colors';
 import {View} from 'react-native';
 import {
+  AddAddress,
+  AddAddressText,
   Container,
   HandImage,
   Header,
@@ -26,6 +29,10 @@ export const HomeScreen = () => {
             resizeMode="contain"
           />
         </Header>
+        <AddAddress>
+          <Icon name="AddAddress" size={22} />
+          <AddAddressText>Agregar dirección de entrega</AddAddressText>
+        </AddAddress>
       </Container>
     </>
   );
