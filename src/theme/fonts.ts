@@ -8,6 +8,7 @@ export const fonts = {
   robotoMedium: 'Roboto-Medium',
   robotoThin: 'Roboto-Thin',
   robotoBold: 'Roboto-Bold',
+  robotoBlack: 'Roboto-Black',
 };
 
 export type FontType = typeof fonts;

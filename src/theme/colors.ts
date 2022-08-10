@@ -18,10 +18,11 @@ export const colors = {
   },
   text: {
     primary: '#000000',
-    secondary: '#5856D6',
+    secondary: '#00BAA4',
     tertiary: '#008F7E',
     quaternary: '#ADADAD',
     quinary: '#000000B0',
+    sextiary: '#333333',
     disabled: '#9C9C9C',
     placeholder: '#CCCCCC',
     inverse: '#FFFFFF',

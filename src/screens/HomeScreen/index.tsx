@@ -1,12 +1,32 @@
 import {StatusBarComponent} from '@components/StatusBar';
 import {colors} from '@theme/colors';
-import {Container, Title} from './styles';
+import {View} from 'react-native';
+import {
+  Container,
+  HandImage,
+  Header,
+  Subtitle,
+  TitleBottom,
+  TitleTop,
+} from './styles';
 
 export const HomeScreen = () => {
   return (
     <>
       <StatusBarComponent backgroundColor={colors.bg.quinary} />
-      <Container>{/* <Title>Home</Title> */}</Container>
+      <Container>
+        <Header>
+          <View>
+            <TitleTop>Tenpo</TitleTop>
+            <TitleBottom>Eats</TitleBottom>
+            <Subtitle>DELIVER APP</Subtitle>
+          </View>
+          <HandImage
+            source={require('../../../assets/images/hand.png')}
+            resizeMode="contain"
+          />
+        </Header>
+      </Container>
     </>
   );
 };
