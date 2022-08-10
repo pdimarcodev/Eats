@@ -39,18 +39,27 @@ export const HandImage = styled.Image`
 `;
 
 export const AddAddress = styled.View`
-  height: 60px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
+  height: 130px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 80px;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.secondary};
 `;
 
 export const AddAddressText = styled.Text`
   font-size: 18px;
   margin-left: 10px;
-  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayLight};
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
   color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
+`;
+
+export const SlidersContainer = styled.View`
+  flex: 1;
+  margin-top: -50px;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};
 `;

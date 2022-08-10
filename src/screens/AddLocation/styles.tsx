@@ -23,6 +23,6 @@ export const HeaderWrapper = styled.View`
 export const Title = styled.Text`
   font-size: 18px;
   margin-left: 10px;
-  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayLight};
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
   color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
 `;

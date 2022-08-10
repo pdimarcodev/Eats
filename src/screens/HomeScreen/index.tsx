@@ -8,6 +8,7 @@ import {
   Container,
   HandImage,
   Header,
+  SlidersContainer,
   Subtitle,
   TitleBottom,
   TitleTop,
@@ -33,6 +34,9 @@ export const HomeScreen = () => {
           <Icon name="AddAddress" size={22} />
           <AddAddressText>Agregar dirección de entrega</AddAddressText>
         </AddAddress>
+        <SlidersContainer>
+          <View />
+        </SlidersContainer>
       </Container>
     </>
   );
