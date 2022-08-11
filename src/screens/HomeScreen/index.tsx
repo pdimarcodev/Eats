@@ -14,7 +14,7 @@ import {
   TitleBottom,
   TitleTop,
 } from './styles';
-import {restaurants} from './mocks/mocks';
+import {restaurants, categories} from './mocks/mocks';
 import {Spacer} from '@components/Spacer';
 
 export const HomeScreen = () => {
@@ -39,7 +39,16 @@ export const HomeScreen = () => {
         </AddAddress>
         <SlidersContainer>
           <Spacer height={35} />
-          <HorizontalSlider title="restaurantes" data={restaurants} />
+          <HorizontalSlider
+            title="restaurantes"
+            data={restaurants}
+            type="restaurant"
+          />
+          <HorizontalSlider
+            title="categorias"
+            data={categories}
+            type="category"
+          />
         </SlidersContainer>
       </Container>
     </>

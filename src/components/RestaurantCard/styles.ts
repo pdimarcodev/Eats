@@ -43,7 +43,7 @@ export const Discount = styled.View`
   height: 30px;
   width: 30px;
   padding: 3px;
-  justify-coontent: center;
+  justify-content: center;
   align-items: center;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.quaternary};
 `;

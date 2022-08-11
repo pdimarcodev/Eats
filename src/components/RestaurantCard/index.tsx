@@ -1,12 +1,13 @@
-import {Icon} from '@components/Icon';
 import {FC} from 'react';
-import {View} from 'react-native';
+
+import {Icon} from '@components/Icon';
 import {
   CardImage,
   Container,
   Discount,
   DiscountRate,
   DiscountText,
+  ImageWrapper,
   Info,
   InfoText,
   InfoWrapper,
@@ -19,10 +20,10 @@ interface RestaurantCardProps {
 }
 
 export const RestaurantCard: FC<RestaurantCardProps> = ({data}) => {
-  console.log(data.icon);
   return (
     <Container>
       <CardImage source={data.icon} />
+
       <InfoWrapper>
         <Name>{data.name}</Name>
         <Info>

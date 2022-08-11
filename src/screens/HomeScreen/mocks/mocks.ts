@@ -32,3 +32,21 @@ export const restaurants = [
     deliveryTime: '10-60 min',
   },
 ];
+
+export const categories = [
+  {
+    id: '1',
+    name: 'hamburguesas',
+    image: require('../../../../assets/images/hamburgers.png'),
+  },
+  {
+    id: '2',
+    name: 'italiana',
+    image: require('../../../../assets/images/italian.png'),
+  },
+  {
+    id: '3',
+    name: 'pizzas',
+    image: require('../../../../assets/images/pizzas.png'),
+  },
+];

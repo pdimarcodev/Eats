@@ -1,22 +1,52 @@
 import {FC} from 'react';
 import {FlatList} from 'react-native';
 import {RestaurantCard} from '@components/RestaurantCard';
-import {Spacer} from '@components/Spacer';
 import {Container, Title} from './styles';
+import {CategoryCard} from '@components/CategoryCard';
+import {Spacer} from '@components/Spacer';
+
+/**
+ * Types
+ */
+
+type CardType = 'restaurant' | 'category' | 'favorite';
 
 interface HorizontalSliderProps {
   title: string;
   data: any[];
+  type: CardType;
 }
 
-export const HorizontalSlider: FC<HorizontalSliderProps> = ({title, data}) => {
+/**
+ * HorizontalSlider
+ */
+
+export const HorizontalSlider: FC<HorizontalSliderProps> = ({
+  title,
+  data,
+  type,
+}) => {
+  const renderItem = ({item}: {item: any}) => {
+    switch (type) {
+      case 'restaurant':
+        return <RestaurantCard data={item} />;
+      case 'category':
+        return <CategoryCard data={item} />;
+      case 'favorite':
+        return null;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Container>
       <Title>{title}</Title>
-      <Spacer />
+      <Spacer height={5} />
       <FlatList
         data={data}
-        renderItem={({item}: {item: any}) => <RestaurantCard data={item} />}
+        // renderItem={({item}: {item: any}) => <RestaurantCard data={item} />}
+        renderItem={renderItem}
         keyExtractor={item => item.id.toString()}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
