@@ -9,7 +9,7 @@ export const AvatarWrapper = styled.View`
 export const Avatar = styled.Image`
   width: 40px;
   height: 40px;
-  border-radius: 50;
-  border-width: 2;
+  border-radius: 50px;
+  border-width: 2px;
   border-color: ${({theme}: StyledProps) => theme.colors.bg.quaternary};
 `;
