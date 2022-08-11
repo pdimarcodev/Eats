@@ -1,3 +1,4 @@
+import {HorizontalSlider} from '@components/HorizontalSlider';
 import {Icon} from '@components/Icon';
 import {StatusBarComponent} from '@components/StatusBar';
 import {colors} from '@theme/colors';
@@ -13,6 +14,8 @@ import {
   TitleBottom,
   TitleTop,
 } from './styles';
+import {restaurants} from './mocks/mocks';
+import {Spacer} from '@components/Spacer';
 
 export const HomeScreen = () => {
   return (
@@ -35,7 +38,8 @@ export const HomeScreen = () => {
           <AddAddressText>Agregar dirección de entrega</AddAddressText>
         </AddAddress>
         <SlidersContainer>
-          <View />
+          <Spacer height={35} />
+          <HorizontalSlider title="restaurantes" data={restaurants} />
         </SlidersContainer>
       </Container>
     </>

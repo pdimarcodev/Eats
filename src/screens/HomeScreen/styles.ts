@@ -59,6 +59,7 @@ export const AddAddressText = styled.Text`
 export const SlidersContainer = styled.View`
   flex: 1;
   margin-top: -50px;
+  padding-horizontal: 20px;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};
