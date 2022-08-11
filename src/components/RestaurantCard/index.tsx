@@ -1,8 +1,12 @@
 import {Icon} from '@components/Icon';
 import {FC} from 'react';
+import {View} from 'react-native';
 import {
   CardImage,
   Container,
+  Discount,
+  DiscountRate,
+  DiscountText,
   Info,
   InfoText,
   InfoWrapper,
@@ -29,6 +33,10 @@ export const RestaurantCard: FC<RestaurantCardProps> = ({data}) => {
           <InfoText>{data.deliveryTime}</InfoText>
         </Info>
       </InfoWrapper>
+      <Discount>
+        <DiscountRate>{data.discount}%</DiscountRate>
+        <DiscountText>DCTO</DiscountText>
+      </Discount>
     </Container>
   );
 };
