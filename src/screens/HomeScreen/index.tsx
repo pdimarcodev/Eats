@@ -1,14 +1,18 @@
+import {FC} from 'react';
+import {StackScreenProps} from '@react-navigation/stack';
+
+import {RootStackParams} from '@navigation/Home';
 import {HorizontalSlider} from '@components/HorizontalSlider';
 import {Icon} from '@components/Icon';
 import {StatusBarComponent} from '@components/StatusBar';
 import {colors} from '@theme/colors';
-import {View} from 'react-native';
 import {
   AddAddress,
   AddAddressText,
   Container,
   HandImage,
   Header,
+  Hero,
   SlidersContainer,
   Subtitle,
   TitleBottom,
@@ -17,23 +21,33 @@ import {
 import {restaurants, categories, favorites} from './mocks/mocks';
 import {Spacer} from '@components/Spacer';
 
-export const HomeScreen = () => {
+/**
+ * Types
+ */
+
+type HomeScreenProps = StackScreenProps<RootStackParams, 'Home'>;
+
+/**
+ * HomeScreen
+ */
+
+export const HomeScreen: FC<HomeScreenProps> = ({navigation: {navigate}}) => {
   return (
     <>
       <StatusBarComponent backgroundColor={colors.bg.quinary} />
       <Container>
         <Header>
-          <View>
+          <Hero>
             <TitleTop>Tenpo</TitleTop>
             <TitleBottom>Eats</TitleBottom>
             <Subtitle>DELIVER APP</Subtitle>
-          </View>
+          </Hero>
           <HandImage
             source={require('../../../assets/images/hand.png')}
             resizeMode="contain"
           />
         </Header>
-        <AddAddress>
+        <AddAddress onPress={() => navigate('AddLocation')}>
           <Icon name="AddAddress" size={22} />
           <AddAddressText>Agregar dirección de entrega</AddAddressText>
         </AddAddress>

@@ -13,6 +13,8 @@ export const Header = styled.View`
   align-items: center;
 `;
 
+export const Hero = styled.View``;
+
 export const TitleTop = styled.Text`
   font-size: 42px;
   font-family: ${({theme}: StyledProps) => theme.fonts.robotoBlack};
@@ -38,7 +40,7 @@ export const HandImage = styled.Image`
   right: 30px;
 `;
 
-export const AddAddress = styled.View`
+export const AddAddress = styled.Pressable`
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   height: 130px;

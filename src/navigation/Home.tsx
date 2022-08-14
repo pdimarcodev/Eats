@@ -1,11 +1,9 @@
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {theme} from '@theme';
 import {HomeScreen} from '@screens/HomeScreen';
 import {AddLocationScreen} from '@screens/AddLocation';
 import {AvatarComponent} from '@components/Avatar';
 import {Icon} from '@components/Icon';
-import {View} from 'react-native';
 import {IconWrapper} from './styles';
 import {colors} from '@theme/colors';
 
