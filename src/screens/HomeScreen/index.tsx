@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 
 import {RootStackParams} from '@navigation/Home';
@@ -15,6 +15,7 @@ import {
   HandImage,
   Header,
   Hero,
+  IconWrapper,
   SlidersContainer,
   Subtitle,
   TitleBottom,
@@ -35,8 +36,20 @@ type HomeScreenProps = StackScreenProps<RootStackParams, 'Home'>;
  * HomeScreen
  */
 
-export const HomeScreen: FC<HomeScreenProps> = ({navigation: {navigate}}) => {
+export const HomeScreen: FC<HomeScreenProps> = ({
+  navigation: {navigate, setOptions},
+}) => {
   const {user} = useUserContext();
+
+  useEffect(() => {
+    setOptions({
+      headerRight: () => (
+        <IconWrapper onPress={() => navigate('SearchRestaurant')} hitSlop={5}>
+          <Icon name="Search" size={25} />
+        </IconWrapper>
+      ),
+    });
+  }, [navigate, setOptions]);
 
   return (
     <>

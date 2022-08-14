@@ -13,6 +13,10 @@ export const Header = styled.View`
   align-items: center;
 `;
 
+export const IconWrapper = styled.Pressable`
+  margin-right: 20px;
+`;
+
 export const Hero = styled.View``;
 
 export const TitleTop = styled.Text`

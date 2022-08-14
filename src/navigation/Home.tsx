@@ -3,10 +3,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {HomeScreen} from '@screens/HomeScreen';
 import {AddLocationScreen} from '@screens/AddLocation';
 import {AvatarComponent} from '@components/Avatar';
-import {Icon} from '@components/Icon';
-import {IconWrapper} from './styles';
-import {colors} from '@theme/colors';
 import {SearchRestaurantScreen} from '@screens/SearchRestaurant';
+import {colors} from '@theme/colors';
 
 export type RootStackParams = {
   Home: undefined;
@@ -28,11 +26,6 @@ export const Home = () => {
           },
           headerShadowVisible: false,
           headerLeft: () => <AvatarComponent />,
-          headerRight: () => (
-            <IconWrapper>
-              <Icon name="Search" size={25} />
-            </IconWrapper>
-          ),
           cardStyle: {
             backgroundColor: colors.bg.quinary,
           },
