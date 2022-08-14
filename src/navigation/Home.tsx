@@ -6,10 +6,12 @@ import {AvatarComponent} from '@components/Avatar';
 import {Icon} from '@components/Icon';
 import {IconWrapper} from './styles';
 import {colors} from '@theme/colors';
+import {SearchRestaurantScreen} from '@screens/SearchRestaurant';
 
 export type RootStackParams = {
   Home: undefined;
   AddLocation: undefined;
+  SearchRestaurant: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -45,6 +47,10 @@ export const Home = () => {
           },
         }}>
         <Stack.Screen name="AddLocation" component={AddLocationScreen} />
+        <Stack.Screen
+          name="SearchRestaurant"
+          component={SearchRestaurantScreen}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

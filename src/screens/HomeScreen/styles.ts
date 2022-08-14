@@ -47,8 +47,13 @@ export const AddAddress = styled.Pressable`
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
+  padding-horizontal: 50px;
   padding-bottom: 80px;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.secondary};
+`;
+
+export const AddressWrapper = styled.View`
+  margin-bottom: -10px;
 `;
 
 export const AddAddressText = styled.Text`
@@ -56,6 +61,10 @@ export const AddAddressText = styled.Text`
   margin-left: 10px;
   font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
   color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
+`;
+
+export const AddressTitle = styled(AddAddressText)`
+  font-size: 12px;
 `;
 
 export const SlidersContainer = styled.ScrollView`

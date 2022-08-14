@@ -9,6 +9,8 @@ import {colors} from '@theme/colors';
 import {
   AddAddress,
   AddAddressText,
+  AddressTitle,
+  AddressWrapper,
   Container,
   HandImage,
   Header,
@@ -20,6 +22,8 @@ import {
 } from './styles';
 import {restaurants, categories, favorites} from './mocks/mocks';
 import {Spacer} from '@components/Spacer';
+import {ShowIf} from '@components/ShowIf';
+import {useUserContext} from 'context/UserContext';
 
 /**
  * Types
@@ -32,6 +36,8 @@ type HomeScreenProps = StackScreenProps<RootStackParams, 'Home'>;
  */
 
 export const HomeScreen: FC<HomeScreenProps> = ({navigation: {navigate}}) => {
+  const {user} = useUserContext();
+
   return (
     <>
       <StatusBarComponent backgroundColor={colors.bg.quinary} />
@@ -49,7 +55,17 @@ export const HomeScreen: FC<HomeScreenProps> = ({navigation: {navigate}}) => {
         </Header>
         <AddAddress onPress={() => navigate('AddLocation')}>
           <Icon name="AddAddress" size={22} />
-          <AddAddressText>Agregar dirección de entrega</AddAddressText>
+          <ShowIf condition={!!user.address}>
+            <AddressWrapper>
+              <AddressTitle>Enviaremos tus pedidos a</AddressTitle>
+              <AddAddressText numberOfLines={1} ellipsizeMode="tail">
+                {user.address}
+              </AddAddressText>
+            </AddressWrapper>
+          </ShowIf>
+          <ShowIf condition={!user.address}>
+            <AddAddressText>{'Agregar dirección de entrega'}</AddAddressText>
+          </ShowIf>
         </AddAddress>
         <SlidersContainer showsVerticalScrollIndicator={false}>
           <Spacer height={35} />

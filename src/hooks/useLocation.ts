@@ -1,25 +1,20 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 
-import {Location} from '@interfaces';
+import {useUserContext} from 'context/UserContext';
 
 export const useLocation = () => {
-  const [hasLocation, setHasLocation] = useState(false);
-  const [initialPosition, setInitialPosition] = useState<Location>({
-    latitude: 0,
-    longitude: 0,
-  });
+  const {user, setUser} = useUserContext();
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(
-      ({coords: {latitude, longitude}}) => {
-        setInitialPosition({latitude, longitude});
-        setHasLocation(true);
-      },
-      error => console.log({error}),
-      {enableHighAccuracy: true},
-    );
-  }, []);
-
-  return {hasLocation, initialPosition};
+    if (!user.location) {
+      Geolocation.getCurrentPosition(
+        ({coords: {latitude, longitude}}) => {
+          setUser({location: {latitude, longitude}});
+        },
+        error => console.log({error}),
+        {enableHighAccuracy: true},
+      );
+    }
+  }, [user, setUser]);
 };

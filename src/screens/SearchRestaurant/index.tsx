@@ -10,15 +10,18 @@ import {Prediction} from '@interfaces/Prediction';
 import googlePlacesApi from '@client/googlePlaces';
 import {SearchBar} from '@components/SearchBar';
 import {useDebounce} from '@hooks';
+import {Location} from '@interfaces';
 import {Keyboard} from 'react-native';
 import {Icon} from '@components/Icon';
 import {colors} from '@theme/colors';
 import {StatusBarComponent} from '@components/StatusBar';
-import {useUserContext} from 'context/UserContext';
 
-export const AddLocationScreen = () => {
-  const {user, setUser} = useUserContext();
+export const SearchRestaurantScreen = () => {
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
+  const [selectedLocation, setSelectedLocation] = useState<Location>({
+    latitude: 0,
+    longitude: 0,
+  });
   const [search, setSearch] = useState({term: '', fetchPredictions: false});
   const [showPredictions, setShowPredictions] = useState(false);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
@@ -76,10 +79,7 @@ export const AddLocationScreen = () => {
           },
         } = result;
         const {lat, lng} = location;
-        setUser({
-          location: {latitude: lat, longitude: lng},
-          address: description,
-        });
+        setSelectedLocation({latitude: lat, longitude: lng});
         setShowPredictions(false);
         setSearch({term: description, fetchPredictions: false});
       }
@@ -120,7 +120,7 @@ export const AddLocationScreen = () => {
           onClearSearch={onClearSearch}
           onSelection={onSelection}
         />
-        <Map selectedLocation={user.location} />
+        <Map selectedLocation={selectedLocation} />
       </Container>
     </>
   );
