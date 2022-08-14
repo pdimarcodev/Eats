@@ -3,7 +3,7 @@ import {StyledProps} from '@interfaces';
 
 export const Container = styled.View`
   flex-direction: column;
-  height: 150px;
+  height: 165px;
   width: 245px;
   margin-right: 10px;
   border-top-left-radius: 10px;
@@ -27,11 +27,22 @@ export const Logo = styled.Image`
   left: 15px;
 `;
 
+export const WhiteBar = styled.View`
+  width: 130px;
+  height: 8px;
+  border-radius: 25px;
+  background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};
+  position: absolute;
+  top: 15px;
+  right: 10px;
+`;
+
 export const InfoWrapper = styled.View`
-    height: 40px;
+    height: 55px;
     margin-horizontal: 2px;
     margin-top: -5px;
     margin-bottom: 2px;
+    padding: 10px;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     background-color:  ${({theme}: StyledProps) => theme.colors.bg.primary};
@@ -43,11 +54,21 @@ export const InfoWrapper = styled.View`
     elevation: 5;
 `;
 
-export const Title = styled.Text`
-  font-size: 18px;
-  text-transform: uppercase;
-  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayBold};
-  color: ${({theme}: StyledProps) => theme.colors.text.inverse};
-  text-align: center;
-  letter-spacing: 1.4px;
+export const TextWrapper = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
 `;
+
+export const Description = styled.Text`
+  font-size: 12px;
+  font-family: ${({theme}: StyledProps) => theme.fonts.robotoRegular};
+  color: ${({theme}: StyledProps) => theme.colors.text.sextiary};
+`;
+
+export const BusinessName = styled.Text`
+  font-size: 12px;
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayBold};
+  color: ${({theme}: StyledProps) => theme.colors.text.secondary};
+`;
+
+export const DeliveryTime = styled(Description)``;

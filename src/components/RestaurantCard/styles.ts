@@ -28,8 +28,6 @@ export const Info = styled.View`
   justify-content: space-between;
 `;
 
-export const Rate = styled(Info)``;
-
 export const InfoText = styled(Name)`
   font-size: 12px;
   font-family: ${({theme}: StyledProps) => theme.fonts.robotoRegular};

@@ -44,11 +44,11 @@ export const HomeScreen = () => {
             data={restaurants}
             type="restaurant"
           />
-          {/* <HorizontalSlider
+          <HorizontalSlider
             title="categorias"
             data={categories}
             type="category"
-          /> */}
+          />
           <HorizontalSlider
             title="tus favoritos"
             data={favorites}

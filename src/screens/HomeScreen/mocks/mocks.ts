@@ -55,7 +55,7 @@ export const favorites = [
   {
     id: '1',
     businessName: 'Mcdonalds',
-    product: 'Combo hamburguesa Bigmax',
+    product: 'Combo hamburguesa Bigmac',
     icon: require('../../../../assets/images/mac.png'),
     image: require('../../../../assets/images/mac-fav.png'),
     rate: '3.5',

@@ -1,6 +1,5 @@
 import {FC} from 'react';
 
-import {Icon} from '@components/Icon';
 import {
   CardImage,
   Container,
@@ -11,8 +10,8 @@ import {
   InfoText,
   InfoWrapper,
   Name,
-  Rate,
 } from './styles';
+import {Rate} from '@components/Rate';
 
 interface RestaurantCardProps {
   data: any;
@@ -26,10 +25,7 @@ export const RestaurantCard: FC<RestaurantCardProps> = ({data}) => {
       <InfoWrapper>
         <Name>{data.name}</Name>
         <Info>
-          <Rate>
-            <Icon name="Star" size={12} />
-            <InfoText>{data.rate}</InfoText>
-          </Rate>
+          <Rate rate={data.rate} />
           <InfoText>{data.deliveryTime}</InfoText>
         </Info>
       </InfoWrapper>
