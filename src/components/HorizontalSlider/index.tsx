@@ -1,9 +1,11 @@
 import {FC} from 'react';
 import {FlatList} from 'react-native';
+
 import {RestaurantCard} from '@components/RestaurantCard';
 import {Container, Title} from './styles';
 import {CategoryCard} from '@components/CategoryCard';
 import {Spacer} from '@components/Spacer';
+import {FavoriteCard} from '@components/FavoriteCard';
 
 /**
  * Types
@@ -33,7 +35,7 @@ export const HorizontalSlider: FC<HorizontalSliderProps> = ({
       case 'category':
         return <CategoryCard data={item} />;
       case 'favorite':
-        return null;
+        return <FavoriteCard data={item} />;
       default:
         return null;
     }
@@ -45,12 +47,12 @@ export const HorizontalSlider: FC<HorizontalSliderProps> = ({
       <Spacer height={5} />
       <FlatList
         data={data}
-        // renderItem={({item}: {item: any}) => <RestaurantCard data={item} />}
         renderItem={renderItem}
         keyExtractor={item => item.id.toString()}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       />
+      <Spacer />
     </Container>
   );
 };

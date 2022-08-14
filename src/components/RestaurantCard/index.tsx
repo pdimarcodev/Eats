@@ -7,7 +7,6 @@ import {
   Discount,
   DiscountRate,
   DiscountText,
-  ImageWrapper,
   Info,
   InfoText,
   InfoWrapper,

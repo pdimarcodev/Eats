@@ -50,3 +50,24 @@ export const categories = [
     image: require('../../../../assets/images/pizzas.png'),
   },
 ];
+
+export const favorites = [
+  {
+    id: '1',
+    businessName: 'Mcdonalds',
+    product: 'Combo hamburguesa Bigmax',
+    icon: require('../../../../assets/images/mac.png'),
+    image: require('../../../../assets/images/mac-fav.png'),
+    rate: '3.5',
+    deliveryTime: '10-60 min.',
+  },
+  {
+    id: '2',
+    businessName: 'MELT pizzas',
+    product: 'Pizza Mediana',
+    icon: require('../../../../assets/images/melt.png'),
+    image: require('../../../../assets/images/melt-fav.png'),
+    rate: '4.5',
+    deliveryTime: '10-50 min.',
+  },
+];

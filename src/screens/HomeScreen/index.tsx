@@ -14,7 +14,7 @@ import {
   TitleBottom,
   TitleTop,
 } from './styles';
-import {restaurants, categories} from './mocks/mocks';
+import {restaurants, categories, favorites} from './mocks/mocks';
 import {Spacer} from '@components/Spacer';
 
 export const HomeScreen = () => {
@@ -44,10 +44,15 @@ export const HomeScreen = () => {
             data={restaurants}
             type="restaurant"
           />
-          <HorizontalSlider
+          {/* <HorizontalSlider
             title="categorias"
             data={categories}
             type="category"
+          /> */}
+          <HorizontalSlider
+            title="tus favoritos"
+            data={favorites}
+            type="favorite"
           />
         </SlidersContainer>
       </Container>
