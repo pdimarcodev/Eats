@@ -2,9 +2,9 @@ import styled from 'styled-components/native';
 import {StyledProps} from '@interfaces';
 
 export const Container = styled.View`
-  flex-direction: column;
   height: 165px;
   width: 245px;
+  margin-top: 5px;
   margin-right: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

@@ -1,6 +1,6 @@
 import {FC} from 'react';
 
-import {CardImage, Title} from './styles';
+import {CardImage, Container, Title} from './styles';
 
 interface CategoryCardProps {
   data: any;
@@ -8,8 +8,10 @@ interface CategoryCardProps {
 
 export const CategoryCard: FC<CategoryCardProps> = ({data}) => {
   return (
-    <CardImage source={data.image} resizeMode="contain">
-      <Title>{data.name}</Title>
-    </CardImage>
+    <Container>
+      <CardImage source={data.image} resizeMode="cover">
+        <Title>{data.name}</Title>
+      </CardImage>
+    </Container>
   );
 };

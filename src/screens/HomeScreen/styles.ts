@@ -56,10 +56,10 @@ export const AddAddressText = styled.Text`
   color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
 `;
 
-export const SlidersContainer = styled.View`
+export const SlidersContainer = styled.ScrollView`
   flex: 1;
   margin-top: -50px;
-  padding-horizontal: 20px;
+  padding-left: 20px;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};

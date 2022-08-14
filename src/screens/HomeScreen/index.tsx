@@ -37,7 +37,7 @@ export const HomeScreen = () => {
           <Icon name="AddAddress" size={22} />
           <AddAddressText>Agregar dirección de entrega</AddAddressText>
         </AddAddress>
-        <SlidersContainer>
+        <SlidersContainer showsVerticalScrollIndicator={false}>
           <Spacer height={35} />
           <HorizontalSlider
             title="restaurantes"
