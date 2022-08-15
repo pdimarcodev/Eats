@@ -1,29 +1,54 @@
-import {useEffect, useState} from 'react';
-import {Alert, Platform} from 'react-native';
+import {FC, useEffect, useState} from 'react';
+import {Alert, Platform, Pressable} from 'react-native';
 import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {GOOGLE_API_KEY} from 'react-native-dotenv';
 
 import {Map} from '@components/Map';
 import {Spinner} from '@components/Spinner';
-import {Container, HeaderWrapper, Title} from './styles';
-import {Prediction} from '@interfaces/Prediction';
+import {
+  Address,
+  Container,
+  HeaderWrapper,
+  Icon,
+  OptionsWrapper,
+  OptionWrapper,
+  TextWrapper,
+  Title,
+} from './styles';
 import googlePlacesApi from '@client/googlePlaces';
 import {SearchBar} from '@components/SearchBar';
 import {useDebounce} from '@hooks';
-import {Location} from '@interfaces';
+import {Location, Restaurant} from '@interfaces';
 import {Keyboard} from 'react-native';
-import {Icon} from '@components/Icon';
+
 import {colors} from '@theme/colors';
 import {StatusBarComponent} from '@components/StatusBar';
 import {useUserContext} from 'context/UserContext';
+import {RootStackParams} from '@navigation/Home';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export const SearchRestaurantScreen = () => {
+/**
+ * Types
+ */
+
+type SearchRestaurantScreen = StackScreenProps<
+  RootStackParams,
+  'SearchRestaurant'
+>;
+
+/**
+ * SearchRestaurantScreen
+ */
+
+export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
+  navigation: {goBack},
+}) => {
   const {user, setUser} = useUserContext();
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
 
-  const [search, setSearch] = useState({term: '', fetchPredictions: false});
-  const [showPredictions, setShowPredictions] = useState(false);
-  const [predictions, setPredictions] = useState<Prediction[]>([]);
+  const [search, setSearch] = useState({term: '', fetch: false});
+  const [showResults, setShowResults] = useState(false);
+  const [results, setResults] = useState<Restaurant[]>([]);
   const [radius, setRadius] = useState(1000);
 
   const {latitude, longitude} = user.location as Location;
@@ -45,7 +70,7 @@ export const SearchRestaurantScreen = () => {
     if (search.term.trim() === '') {
       onClearSearch();
     }
-    if (!search.fetchPredictions) {
+    if (!search.fetch) {
       return;
     }
 
@@ -55,9 +80,9 @@ export const SearchRestaurantScreen = () => {
         url: `/nearbysearch/json?location=${latitude}%2C${longitude}&radius=${radius}&type=restaurant&key=${GOOGLE_API_KEY}`,
       });
       if (result) {
-        // setPredictions(result.results);
-        console.log(result);
-        setShowPredictions(true);
+        setResults(result.data.results);
+        console.log(result.data.results);
+        setShowResults(true);
       }
     } catch (e) {
       console.log(e);
@@ -66,7 +91,7 @@ export const SearchRestaurantScreen = () => {
 
   useDebounce(onChangeText, 300, [search.term]);
 
-  const onSelection = async (placeId: string, description: string) => {
+  const onSelection = async (item: Restaurant) => {
     //  url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY',
 
     try {
@@ -84,8 +109,8 @@ export const SearchRestaurantScreen = () => {
         } = result;
         const {lat, lng} = location;
         // setSelectedLocation({latitude: lat, longitude: lng});
-        setShowPredictions(false);
-        setSearch({term: description, fetchPredictions: false});
+        setShowResults(false);
+        setSearch({term: description, fetch: false});
       }
     } catch (e) {
       console.log(e);
@@ -93,8 +118,8 @@ export const SearchRestaurantScreen = () => {
   };
 
   const onClearSearch = () => {
-    setShowPredictions(false);
-    setSearch({term: '', fetchPredictions: false});
+    setShowResults(false);
+    setSearch({term: '', fetch: false});
   };
 
   useEffect(() => {
@@ -110,20 +135,33 @@ export const SearchRestaurantScreen = () => {
       <StatusBarComponent backgroundColor={colors.bg.secondary} />
       <Container onPress={() => Keyboard.dismiss()}>
         <HeaderWrapper>
-          <Icon name="AddAddress" size={22} />
-          <Title>Agregar dirección de entrega</Title>
+          <Pressable onPress={goBack}>
+            <Icon source={require('../../../assets/images/back-arrow.png')} />
+          </Pressable>
+          <TextWrapper>
+            <Title>Tu ubicación cercana</Title>
+            <Address numberOfLines={1} ellipsizeMode="tail">
+              {user.address?.split(',')[0] || ''}
+            </Address>
+          </TextWrapper>
+          <Icon source={require('../../../assets/images/target.png')} />
         </HeaderWrapper>
         <SearchBar
           value={search.term}
-          placeholder={'Escribe tu dirección'}
+          type="restaurant"
+          placeholder={'Escribe nombre del restaurante que búscas'}
           onChangeText={(text: string) => {
-            setSearch({term: text, fetchPredictions: true});
+            setSearch({term: text, fetch: true});
           }}
-          showData={showPredictions}
-          data={predictions}
+          showData={showResults}
+          data={results}
           onClearSearch={onClearSearch}
           onSelection={onSelection}
         />
+        <OptionsWrapper>
+          <OptionWrapper />
+          <OptionWrapper />
+        </OptionsWrapper>
         {/* <Map selectedLocation={selectedLocation} /> */}
       </Container>
     </>

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {Alert, Platform} from 'react-native';
 import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {GOOGLE_API_KEY} from 'react-native-dotenv';
@@ -15,8 +15,20 @@ import {Icon} from '@components/Icon';
 import {colors} from '@theme/colors';
 import {StatusBarComponent} from '@components/StatusBar';
 import {useUserContext} from 'context/UserContext';
+import {RootStackParams} from '@navigation/Home';
+import {StackScreenProps} from '@react-navigation/stack';
 
-export const AddLocationScreen = () => {
+/**
+ * Types
+ */
+
+type AddLocationScreenProps = StackScreenProps<RootStackParams, 'AddLocation'>;
+
+/**
+ * AddLocationScreen
+ */
+
+export const AddLocationScreen: FC<AddLocationScreenProps> = () => {
   const {user, setUser} = useUserContext();
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
   const [search, setSearch] = useState({term: '', fetchPredictions: false});
@@ -61,11 +73,11 @@ export const AddLocationScreen = () => {
 
   useDebounce(onChangeText, 300, [search.term]);
 
-  const onSelection = async (placeId: string, description: string) => {
+  const onSelection = async ({place_id, description}: Prediction) => {
     try {
       const result = await googlePlacesApi.request({
         method: 'get',
-        url: `/details/json?place_id=${placeId}&key=${GOOGLE_API_KEY}`,
+        url: `/details/json?place_id=${place_id}&key=${GOOGLE_API_KEY}`,
       });
       if (result) {
         const {
@@ -81,6 +93,7 @@ export const AddLocationScreen = () => {
           address: description,
         });
         setShowPredictions(false);
+        Keyboard.dismiss();
         setSearch({term: description, fetchPredictions: false});
       }
     } catch (e) {
@@ -111,6 +124,7 @@ export const AddLocationScreen = () => {
         </HeaderWrapper>
         <SearchBar
           value={search.term}
+          type="location"
           placeholder={'Escribe tu dirección'}
           onChangeText={(text: string) => {
             setSearch({term: text, fetchPredictions: true});

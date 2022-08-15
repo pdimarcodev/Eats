@@ -48,6 +48,22 @@ export const ListItemWrapper = styled.Pressable`
   height: 56px;
 `;
 
+export const ListItemWrapperRestaurants = styled(ListItemWrapper)`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+export const Logo = styled.Image`
+  width: 40px;
+  height: 40px;
+`;
+
+export const TextWrapper = styled.View`
+  flex-direction: column;
+  margin-left: 10px;
+`;
+
 export const ListItemMain = styled.Text`
   color: ${({theme}: StyledProps) => theme.colors.text.primary};
   font-size: 18px;

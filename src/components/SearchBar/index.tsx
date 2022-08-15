@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {FlatList, Pressable} from 'react-native';
-import {Prediction} from '@interfaces';
+import {Prediction, Restaurant} from '@interfaces';
 
 import {
   Container,
@@ -12,20 +12,26 @@ import {
   ListItemSecondary,
   ListItemSeparator,
   ListItemWrapper,
+  ListItemWrapperRestaurants,
+  Logo,
   SearchText,
   TextBackground,
+  TextWrapper,
 } from './styles';
 import {Icon} from '@components/Icon';
 import {colors} from '@theme/colors';
 
+type SearchBarType = 'location' | 'restaurant';
+
 interface SearchBarProps {
   value: string;
   placeholder: string;
-  data: Prediction[];
+  type: SearchBarType;
+  data: Prediction[] | Restaurant[];
   showData: boolean;
   onChangeText: (text: string) => void;
   onClearSearch: () => void;
-  onSelection: (key: string, value: string) => void;
+  onSelection: (item: any) => void;
 }
 
 const ListFooterComponent: FC = () => (
@@ -41,20 +47,20 @@ const ListFooterComponent: FC = () => (
 export const SearchBar: FC<SearchBarProps> = ({
   value,
   placeholder,
+  type,
   data,
   showData,
   onChangeText,
   onClearSearch,
   onSelection,
 }) => {
-  const renderItems = () => {
+  const renderLocationItems = () => {
     return (
       <FlatList
-        data={data}
+        data={data as Prediction[]}
         renderItem={({item}) => {
           return (
-            <ListItemWrapper
-              onPress={() => onSelection(item.place_id, item.description)}>
+            <ListItemWrapper onPress={() => onSelection(item)}>
               <ListItemMain numberOfLines={1}>
                 {item.description.split(',')[0]}
               </ListItemMain>
@@ -62,6 +68,32 @@ export const SearchBar: FC<SearchBarProps> = ({
                 {item.description.split(',').slice(1).join(',').trim()}
               </ListItemSecondary>
             </ListItemWrapper>
+          );
+        }}
+        ItemSeparatorComponent={() => <ListItemSeparator />}
+        ListFooterComponent={() => <ListFooterComponent />}
+        keyExtractor={item => item.place_id}
+        keyboardShouldPersistTaps="handled"
+        style={flatListStyle}
+      />
+    );
+  };
+
+  const renderRestaurantItems = () => {
+    return (
+      <FlatList
+        data={data as Restaurant[]}
+        renderItem={({item}) => {
+          return (
+            <ListItemWrapperRestaurants onPress={() => onSelection(item)}>
+              <Logo source={{uri: item.icon}} />
+              <TextWrapper>
+                <ListItemMain numberOfLines={1}>{item.name}</ListItemMain>
+                <ListItemSecondary numberOfLines={1}>
+                  {item.vicinity}
+                </ListItemSecondary>
+              </TextWrapper>
+            </ListItemWrapperRestaurants>
           );
         }}
         ItemSeparatorComponent={() => <ListItemSeparator />}
@@ -88,7 +120,8 @@ export const SearchBar: FC<SearchBarProps> = ({
           <Icon name="Clear" size={19} />
         </Pressable>
       </TextBackground>
-      {showData && renderItems()}
+      {showData &&
+        (type === 'location' ? renderLocationItems() : renderRestaurantItems())}
     </Container>
   );
 };
