@@ -14,7 +14,7 @@ import {
 import {Rate} from '@components/Rate';
 
 interface RestaurantCardProps {
-  data: any;
+  data?: any;
 }
 
 export const RestaurantCard: FC<RestaurantCardProps> = ({data}) => {

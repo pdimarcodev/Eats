@@ -3,7 +3,7 @@ import {FC} from 'react';
 import {CardImage, Container, Title} from './styles';
 
 interface CategoryCardProps {
-  data: any;
+  data?: any;
 }
 
 export const CategoryCard: FC<CategoryCardProps> = ({data}) => {

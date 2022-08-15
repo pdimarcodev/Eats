@@ -19,7 +19,7 @@ import {
  */
 
 interface FavoriteCardProps {
-  data: any;
+  data?: any;
 }
 
 /**
