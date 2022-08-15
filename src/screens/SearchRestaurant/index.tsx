@@ -8,6 +8,7 @@ import {Map} from '@components/Map';
 import {Spinner} from '@components/Spinner';
 import {
   Address,
+  Back,
   Container,
   HeaderWrapper,
   Icon,
@@ -131,7 +132,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
       <Container onPress={() => Keyboard.dismiss()}>
         <HeaderWrapper>
           <Pressable onPress={goBack}>
-            <Icon source={require('../../../assets/images/back-arrow.png')} />
+            <Back source={require('../../../assets/images/back-arrow.png')} />
           </Pressable>
           <TextWrapper>
             <Title>Tu ubicación cercana</Title>

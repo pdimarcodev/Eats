@@ -20,7 +20,7 @@ export const HeaderWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  padding-horizontal: 50px;
+  padding-horizontal: 30px;
   padding-bottom: 50px;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.secondary};
 `;
@@ -43,6 +43,12 @@ export const Address = styled(Title)`
 export const Icon = styled.Image`
   width: 22px;
   height: 22px;
+`;
+
+export const Back = styled(Icon)`
+  width: 40px;
+  height: 40px;
+  tint-color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
 `;
 
 export const OptionsWrapper = styled.View`
