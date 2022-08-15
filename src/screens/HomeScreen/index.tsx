@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, useCallback, useEffect} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 
 import {RootStackParams} from '@navigation/Home';
@@ -25,6 +25,7 @@ import {restaurants, categories, favorites} from './mocks/mocks';
 import {Spacer} from '@components/Spacer';
 import {ShowIf} from '@components/ShowIf';
 import {useUserContext} from 'context/UserContext';
+import {Alert} from 'react-native';
 
 /**
  * Types
@@ -41,15 +42,22 @@ export const HomeScreen: FC<HomeScreenProps> = ({
 }) => {
   const {user} = useUserContext();
 
+  const onSearchPress = useCallback(() => {
+    if (user?.address) {
+      return navigate('SearchRestaurant');
+    }
+    Alert.alert('Para buscar agrega tu dirección de entrega');
+  }, [navigate, user]);
+
   useEffect(() => {
     setOptions({
       headerRight: () => (
-        <IconWrapper onPress={() => navigate('SearchRestaurant')} hitSlop={5}>
+        <IconWrapper onPress={onSearchPress} hitSlop={5}>
           <Icon name="Search" size={25} />
         </IconWrapper>
       ),
     });
-  }, [navigate, setOptions]);
+  }, [onSearchPress, setOptions]);
 
   return (
     <>

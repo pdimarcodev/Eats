@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import {StyledProps} from '@interfaces';
 
 export const Container = styled.View`
-  margin-right: 10px;
+  margin-left: 15px;
 `;
 
 export const CardImage = styled.Image`

@@ -10,6 +10,10 @@ import {
   Address,
   Back,
   Container,
+  Detail,
+  DetailLogo,
+  DetailModalContainer,
+  DetailName,
   HeaderWrapper,
   Icon,
   ModalBackground,
@@ -53,17 +57,19 @@ type SearchRestaurantScreen = StackScreenProps<
  */
 
 export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
-  navigation: {navigate, goBack},
+  navigation: {goBack},
 }) => {
   const {user} = useUserContext();
   useLocation();
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
-  const [modalVisible, setModalVisible] = useState(false);
+  const [radiusModalVisible, setRadiusModalVisible] = useState(false);
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [search, setSearch] = useState({term: '', fetch: false});
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<Restaurant[]>([]);
   const [radius, setRadius] = useState(1000);
   const [searchOpen, setSearchOpen] = useState(true);
+  const [restaurant, setRestaurant] = useState<Restaurant | undefined>();
 
   const {latitude, longitude} = user.location || {};
 
@@ -106,17 +112,21 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
   useDebounce(onChangeText, 300, [search.term]);
 
   const onSelection = async (item: Restaurant) => {
-    navigate('RestaurantDetail', {restaurant: item});
+    setRestaurant(item);
+    setDetailModalVisible(true);
   };
 
   const onClearSearch = () => {
     setShowResults(false);
     setSearch({term: '', fetch: false});
+    setDetailModalVisible(false);
   };
 
   const onSelectRadius = (radiusValue: number) => setRadius(radiusValue);
 
-  const handleModal = () => setModalVisible(state => !state);
+  const handleRadiusModal = () => setRadiusModalVisible(state => !state);
+
+  const handleDetailModal = () => setDetailModalVisible(state => !state);
 
   useEffect(() => {
     checkLocationPermissions();
@@ -131,7 +141,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
       <StatusBarComponent backgroundColor={colors.bg.secondary} />
       <Container onPress={() => Keyboard.dismiss()}>
         <HeaderWrapper>
-          <Pressable onPress={goBack}>
+          <Pressable onPress={goBack} hitSlop={10}>
             <Back source={require('../../../assets/images/back-arrow.png')} />
           </Pressable>
           <TextWrapper>
@@ -165,7 +175,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
               <IconComponent name="Check" size={12} />
             </OptionOpenWrapper>
           </OptionWrapperWithOpacity>
-          <OptionWrapper onPress={handleModal}>
+          <OptionWrapper onPress={handleRadiusModal}>
             <OptionTextWrapper>
               <OptionText>Área de búsqueda: </OptionText>
               <OptionTextBold>{radius / 1000} KM</OptionTextBold>
@@ -175,11 +185,11 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
       </Container>
 
       <Modal
-        visible={modalVisible}
+        visible={radiusModalVisible}
         animationType="fade"
         transparent
-        onRequestClose={handleModal}>
-        <ModalBackground onPress={handleModal}>
+        onRequestClose={handleRadiusModal}>
+        <ModalBackground onPress={handleRadiusModal}>
           <ModalContainer>
             <ModalTitleWrapper>
               <ModalTitle>Área de búsqueda</ModalTitle>
@@ -193,6 +203,19 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
             <Map selectedLocation={user.location} radius={radius} />
           </ModalContainer>
         </ModalBackground>
+      </Modal>
+
+      <Modal
+        visible={detailModalVisible}
+        animationType="fade"
+        transparent
+        onRequestClose={handleDetailModal}>
+        <DetailModalContainer onPress={handleDetailModal}>
+          <DetailLogo source={{uri: restaurant?.icon}} />
+          <Spacer height={10} />
+          <DetailName>{restaurant?.name}</DetailName>
+          <Detail>{restaurant?.vicinity}</Detail>
+        </DetailModalContainer>
       </Modal>
     </>
   );

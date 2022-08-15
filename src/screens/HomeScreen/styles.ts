@@ -74,7 +74,6 @@ export const AddressTitle = styled(AddAddressText)`
 export const SlidersContainer = styled.ScrollView`
   flex: 1;
   margin-top: -50px;
-  padding-left: 20px;
   border-top-left-radius: 50px;
   border-top-right-radius: 50px;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};

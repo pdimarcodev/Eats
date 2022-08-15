@@ -122,3 +122,29 @@ export const OptionOpenWrapper = styled.View`
   justify-content: space-between;
   align-items: center;
 `;
+
+export const DetailModalContainer = styled.Pressable`
+  height: 85%;
+  margin-top: auto;
+  align-items: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};
+`;
+
+export const DetailLogo = styled.Image`
+  margin-top: 20px;
+  width: 200px;
+  height: 200px;
+`;
+
+export const DetailName = styled.Text`
+  font-size: 22px;
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayBold};
+  color: ${({theme}: StyledProps) => theme.colors.text.sextiary};
+`;
+
+export const Detail = styled(DetailName)`
+  font-size: 14px;
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
+`;

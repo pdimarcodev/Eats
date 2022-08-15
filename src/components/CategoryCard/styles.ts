@@ -4,7 +4,7 @@ import {StyledProps} from '@interfaces';
 export const Container = styled.View`
   width: 217px;
   height: 105px;
-  margin-right: 10px;
+  margin-left: 15px;
   border-radius: 18px;
   overflow: hidden;
 `;

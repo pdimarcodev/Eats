@@ -5,7 +5,7 @@ export const Container = styled.View`
   height: 165px;
   width: 245px;
   margin-top: 5px;
-  margin-right: 10px;
+  margin-left: 15px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
@@ -41,7 +41,7 @@ export const InfoWrapper = styled.View`
     height: 55px;
     margin-horizontal: 2px;
     margin-top: -5px;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     padding: 10px;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
