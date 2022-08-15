@@ -1,27 +1,33 @@
 import {FC} from 'react';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 import {useUserContext} from 'context/UserContext';
 import {Spinner} from '@components/Spinner';
 import {Container, styles} from './styles';
 import {useLocation} from '@hooks';
 import {Location} from '@interfaces';
+import {ShowIf} from '@components/ShowIf';
+
+/**
+ * Type
+ */
 
 type MapProps = {
   selectedLocation?: Location;
+  radius?: number;
 };
 
 /**
  * Constants
  */
 
-const DELTA = 0.015;
+const DELTA = 0.02;
 
 /**
  * Map Component
  */
 
-export const Map: FC<MapProps> = ({selectedLocation}) => {
+export const Map: FC<MapProps> = ({selectedLocation, radius}) => {
   const {user} = useUserContext();
   useLocation();
 
@@ -51,6 +57,16 @@ export const Map: FC<MapProps> = ({selectedLocation}) => {
             longitude: selectedLng || longitude,
           }}
         />
+        <ShowIf condition={!!radius}>
+          <Circle
+            center={{
+              latitude: selectedLat || latitude,
+              longitude: selectedLng || longitude,
+            }}
+            radius={radius as number}
+            fillColor={'#008F7E4D'}
+          />
+        </ShowIf>
       </MapView>
     </Container>
   );

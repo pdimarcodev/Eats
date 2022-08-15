@@ -1,5 +1,6 @@
 import {FC, useEffect, useState} from 'react';
 import {Alert, Modal, Platform, Pressable} from 'react-native';
+import {StackScreenProps} from '@react-navigation/stack';
 import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {GOOGLE_API_KEY} from 'react-native-dotenv';
 
@@ -23,15 +24,16 @@ import {
 import googlePlacesApi from '@client/googlePlaces';
 import {SearchBar} from '@components/SearchBar';
 import {useDebounce, useLocation} from '@hooks';
-import {Location, Restaurant} from '@interfaces';
+import {Restaurant} from '@interfaces';
 import {Keyboard} from 'react-native';
 
 import {colors} from '@theme/colors';
 import {StatusBarComponent} from '@components/StatusBar';
 import {useUserContext} from 'context/UserContext';
 import {RootStackParams} from '@navigation/Home';
-import {StackScreenProps} from '@react-navigation/stack';
+
 import {Spacer} from '@components/Spacer';
+import {RadiusSelector} from '@components/RadiusSelector';
 
 /**
  * Types
@@ -129,6 +131,8 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
     setSearch({term: '', fetch: false});
   };
 
+  const onSelectRadius = (radiusValue: number) => setRadius(radiusValue);
+
   const handleModal = () => setModalVisible(state => !state);
 
   useEffect(() => {
@@ -187,7 +191,8 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
                 restaurante
               </ModalSubtitle>
             </ModalTitleWrapper>
-            <Map selectedLocation={user.location} />
+            <RadiusSelector selectedValue={radius} onSelect={onSelectRadius} />
+            <Map selectedLocation={user.location} radius={radius} />
           </ModalContainer>
         </ModalBackground>
       </Modal>
