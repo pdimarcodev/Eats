@@ -44,7 +44,6 @@ export const Icon = styled.Image`
 export const OptionsWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
-
   padding: 20px;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.quinary};
 `;
@@ -55,4 +54,40 @@ export const OptionWrapper = styled.Pressable`
   border-radius: 4px;
   border-width: 1.5px;
   border-color: ${({theme}: StyledProps) => theme.colors.bg.quaternary};
+`;
+
+export const ModalBackground = styled.Pressable`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.6);
+`;
+
+export const ModalContainer = styled.View`
+  height: 70%;
+  margin-top: auto;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  background-color: ${({theme}: StyledProps) => theme.colors.bg.quinary};
+`;
+
+export const ModalTitleWrapper = styled.View`
+  height: 15%;
+  margin-top: 20px;
+  padding-top: 20px;
+  padding-horizontal: 30px;
+  justifiy-content: flex-end;
+  align-items: center;
+  background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};
+`;
+
+export const ModalTitle = styled.Text`
+  font-size: 22px;
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayBold};
+  color: ${({theme}: StyledProps) => theme.colors.text.sextiary};
+`;
+
+export const ModalSubtitle = styled.Text`
+  font-size: 14px;
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
+  color: ${({theme}: StyledProps) => theme.colors.text.quaternary};
+  text-align: center;
 `;

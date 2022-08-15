@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from 'react';
-import {Alert, Platform, Pressable} from 'react-native';
+import {Alert, Modal, Platform, Pressable} from 'react-native';
 import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {GOOGLE_API_KEY} from 'react-native-dotenv';
 
@@ -10,6 +10,11 @@ import {
   Container,
   HeaderWrapper,
   Icon,
+  ModalBackground,
+  ModalContainer,
+  ModalSubtitle,
+  ModalTitle,
+  ModalTitleWrapper,
   OptionsWrapper,
   OptionWrapper,
   TextWrapper,
@@ -17,7 +22,7 @@ import {
 } from './styles';
 import googlePlacesApi from '@client/googlePlaces';
 import {SearchBar} from '@components/SearchBar';
-import {useDebounce} from '@hooks';
+import {useDebounce, useLocation} from '@hooks';
 import {Location, Restaurant} from '@interfaces';
 import {Keyboard} from 'react-native';
 
@@ -26,6 +31,7 @@ import {StatusBarComponent} from '@components/StatusBar';
 import {useUserContext} from 'context/UserContext';
 import {RootStackParams} from '@navigation/Home';
 import {StackScreenProps} from '@react-navigation/stack';
+import {Spacer} from '@components/Spacer';
 
 /**
  * Types
@@ -44,14 +50,15 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
   navigation: {goBack},
 }) => {
   const {user, setUser} = useUserContext();
+  useLocation();
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
-
+  const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState({term: '', fetch: false});
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<Restaurant[]>([]);
   const [radius, setRadius] = useState(1000);
 
-  const {latitude, longitude} = user.location as Location;
+  const {latitude, longitude} = user.location || {};
 
   const checkLocationPermissions = async () => {
     const permission =
@@ -122,11 +129,13 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
     setSearch({term: '', fetch: false});
   };
 
+  const handleModal = () => setModalVisible(state => !state);
+
   useEffect(() => {
     checkLocationPermissions();
   }, []);
 
-  if (permissionStatus !== 'granted') {
+  if (permissionStatus !== 'granted' || !user.location) {
     return <Spinner />;
   }
 
@@ -160,10 +169,28 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
         />
         <OptionsWrapper>
           <OptionWrapper />
-          <OptionWrapper />
+          <OptionWrapper onPress={handleModal} />
         </OptionsWrapper>
-        {/* <Map selectedLocation={selectedLocation} /> */}
       </Container>
+      <Modal
+        visible={modalVisible}
+        animationType="fade"
+        transparent
+        onRequestClose={handleModal}>
+        <ModalBackground onPress={handleModal}>
+          <ModalContainer>
+            <ModalTitleWrapper>
+              <ModalTitle>Área de búsqueda</ModalTitle>
+              <Spacer height={5} />
+              <ModalSubtitle>
+                Puedes modificar el radio de distancia para encontrar tu
+                restaurante
+              </ModalSubtitle>
+            </ModalTitleWrapper>
+            <Map selectedLocation={user.location} />
+          </ModalContainer>
+        </ModalBackground>
+      </Modal>
     </>
   );
 };
