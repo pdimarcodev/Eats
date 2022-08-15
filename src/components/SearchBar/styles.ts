@@ -15,6 +15,7 @@ export const TextBackground = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-bottom: 3px;
   shadow-color: black;
   shadow-offset: 0px 2px;
   shadow-opacity: 0.25;

@@ -1,17 +1,20 @@
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import {HomeScreen} from '@screens/HomeScreen';
 import {AddLocationScreen} from '@screens/AddLocation';
 import {AvatarComponent} from '@components/Avatar';
 import {SearchRestaurantScreen} from '@screens/SearchRestaurant';
 import {colors} from '@theme/colors';
-import {SearchAreaScreen} from '@screens/SearchArea';
+import {RestaurantDetailScreen} from '@screens/RestaurantDetal';
+import {Restaurant} from '@interfaces';
 
 export type RootStackParams = {
   Home: undefined;
   AddLocation: undefined;
   SearchRestaurant: undefined;
-  SearchArea: undefined;
+  RestaurantDetail: {
+    restaurant: Restaurant;
+  };
 };
 
 const Stack = createStackNavigator<RootStackParams>();
@@ -46,15 +49,11 @@ export const Home = () => {
           name="SearchRestaurant"
           component={SearchRestaurantScreen}
         />
+        <Stack.Screen
+          name="RestaurantDetail"
+          component={RestaurantDetailScreen}
+        />
       </Stack.Group>
-      <Stack.Screen
-        name="SearchArea"
-        component={SearchAreaScreen}
-        options={{
-          presentation: 'transparentModal',
-          ...TransitionPresets.ModalSlideFromBottomIOS,
-        }}
-      />
     </Stack.Navigator>
   );
 };

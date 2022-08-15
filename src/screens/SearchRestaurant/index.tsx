@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from 'react';
-import {Alert, Modal, Platform, Pressable} from 'react-native';
+import {Alert, Modal, Platform, Pressable, Keyboard} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {GOOGLE_API_KEY} from 'react-native-dotenv';
@@ -16,8 +16,13 @@ import {
   ModalSubtitle,
   ModalTitle,
   ModalTitleWrapper,
+  OptionOpenWrapper,
   OptionsWrapper,
+  OptionText,
+  OptionTextBold,
+  OptionTextWrapper,
   OptionWrapper,
+  OptionWrapperWithOpacity,
   TextWrapper,
   Title,
 } from './styles';
@@ -25,13 +30,11 @@ import googlePlacesApi from '@client/googlePlaces';
 import {SearchBar} from '@components/SearchBar';
 import {useDebounce, useLocation} from '@hooks';
 import {Restaurant} from '@interfaces';
-import {Keyboard} from 'react-native';
-
 import {colors} from '@theme/colors';
 import {StatusBarComponent} from '@components/StatusBar';
 import {useUserContext} from 'context/UserContext';
 import {RootStackParams} from '@navigation/Home';
-
+import {Icon as IconComponent} from '@components/Icon';
 import {Spacer} from '@components/Spacer';
 import {RadiusSelector} from '@components/RadiusSelector';
 
@@ -49,9 +52,9 @@ type SearchRestaurantScreen = StackScreenProps<
  */
 
 export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
-  navigation: {goBack},
+  navigation: {navigate, goBack},
 }) => {
-  const {user, setUser} = useUserContext();
+  const {user} = useUserContext();
   useLocation();
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
   const [modalVisible, setModalVisible] = useState(false);
@@ -59,6 +62,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<Restaurant[]>([]);
   const [radius, setRadius] = useState(1000);
+  const [searchOpen, setSearchOpen] = useState(true);
 
   const {latitude, longitude} = user.location || {};
 
@@ -86,7 +90,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
     try {
       const result = await googlePlacesApi.request({
         method: 'get',
-        url: `/nearbysearch/json?location=${latitude}%2C${longitude}&radius=${radius}&type=restaurant&key=${GOOGLE_API_KEY}`,
+        url: `/nearbysearch/json?location=${latitude}%2C${longitude}&radius=${radius}&type=restaurant&opennow=${searchOpen}&key=${GOOGLE_API_KEY}`,
       });
       if (result) {
         setResults(result.data.results);
@@ -101,29 +105,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
   useDebounce(onChangeText, 300, [search.term]);
 
   const onSelection = async (item: Restaurant) => {
-    //  url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY',
-
-    try {
-      const result = await googlePlacesApi.request({
-        method: 'get',
-        url: `/nearbysearch/json?location=${latitude}%2C${longitude}&radius=${radius}&type=restaurant&key=${GOOGLE_API_KEY}`,
-      });
-      if (result) {
-        const {
-          data: {
-            result: {
-              geometry: {location},
-            },
-          },
-        } = result;
-        const {lat, lng} = location;
-        // setSelectedLocation({latitude: lat, longitude: lng});
-        setShowResults(false);
-        setSearch({term: description, fetch: false});
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    navigate('RestaurantDetail', {restaurant: item});
   };
 
   const onClearSearch = () => {
@@ -159,6 +141,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
           </TextWrapper>
           <Icon source={require('../../../assets/images/target.png')} />
         </HeaderWrapper>
+
         <SearchBar
           value={search.term}
           type="restaurant"
@@ -171,11 +154,25 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
           onClearSearch={onClearSearch}
           onSelection={onSelection}
         />
+
         <OptionsWrapper>
-          <OptionWrapper />
-          <OptionWrapper onPress={handleModal} />
+          <OptionWrapperWithOpacity
+            open={searchOpen}
+            onPress={() => setSearchOpen(state => !state)}>
+            <OptionOpenWrapper>
+              <OptionText>Solo locales abiertos</OptionText>
+              <IconComponent name="Check" size={12} />
+            </OptionOpenWrapper>
+          </OptionWrapperWithOpacity>
+          <OptionWrapper onPress={handleModal}>
+            <OptionTextWrapper>
+              <OptionText>Área de búsqueda: </OptionText>
+              <OptionTextBold>{radius / 1000} KM</OptionTextBold>
+            </OptionTextWrapper>
+          </OptionWrapper>
         </OptionsWrapper>
       </Container>
+
       <Modal
         visible={modalVisible}
         animationType="fade"

@@ -41,7 +41,7 @@ export const RadiusSelector: FC<RadiusSelectorProps> = ({
         <Line />
         {RADIUS_OPTIONS.map(value =>
           value === selectedValue ? (
-            <ItemSelected />
+            <ItemSelected key={value} />
           ) : (
             <ItemNonSelected
               key={value}

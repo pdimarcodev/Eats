@@ -2,6 +2,10 @@ import styled from 'styled-components/native';
 import {StyledProps} from '@interfaces';
 import {StatusBar} from 'react-native';
 
+interface OptionsProps extends StyledProps {
+  open?: boolean;
+}
+
 export const StatusBarView = styled(StatusBar)`
   background-color: ${({theme}: StyledProps) => theme.colors.bg.secondary};
 `;
@@ -28,7 +32,7 @@ export const TextWrapper = styled.View`
 export const Title = styled.Text`
   font-size: 12px;
   margin-left: 10px;
-  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayBold};
   color: ${({theme}: StyledProps) => theme.colors.text.tertiary};
 `;
 
@@ -44,6 +48,7 @@ export const Icon = styled.Image`
 export const OptionsWrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding: 20px;
   background-color: ${({theme}: StyledProps) => theme.colors.bg.quinary};
 `;
@@ -53,7 +58,12 @@ export const OptionWrapper = styled.Pressable`
   width: 45%;
   border-radius: 4px;
   border-width: 1.5px;
+  padding: 8px;
   border-color: ${({theme}: StyledProps) => theme.colors.bg.quaternary};
+`;
+
+export const OptionWrapperWithOpacity = styled(OptionWrapper)<OptionsProps>`
+  opacity: ${({open}) => (open ? 1 : 0.3)};
 `;
 
 export const ModalBackground = styled.Pressable`
@@ -90,4 +100,19 @@ export const ModalSubtitle = styled.Text`
   font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
   color: ${({theme}: StyledProps) => theme.colors.text.quaternary};
   text-align: center;
+`;
+
+export const OptionTextWrapper = styled.Text``;
+
+export const OptionText = styled(Title)`
+  font-family: ${({theme}: StyledProps) => theme.fonts.ralewayRegular};
+`;
+export const OptionTextBold = styled(OptionText)`
+  font-family: ${({theme}: StyledProps) => theme.fonts.robotoBold};
+`;
+
+export const OptionOpenWrapper = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
