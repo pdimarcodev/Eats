@@ -15,16 +15,18 @@ import {Keyboard} from 'react-native';
 import {Icon} from '@components/Icon';
 import {colors} from '@theme/colors';
 import {StatusBarComponent} from '@components/StatusBar';
+import {useUserContext} from 'context/UserContext';
 
 export const SearchRestaurantScreen = () => {
+  const {user, setUser} = useUserContext();
   const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
-  const [selectedLocation, setSelectedLocation] = useState<Location>({
-    latitude: 0,
-    longitude: 0,
-  });
+
   const [search, setSearch] = useState({term: '', fetchPredictions: false});
   const [showPredictions, setShowPredictions] = useState(false);
   const [predictions, setPredictions] = useState<Prediction[]>([]);
+  const [radius, setRadius] = useState(1000);
+
+  const {latitude, longitude} = user.location as Location;
 
   const checkLocationPermissions = async () => {
     const permission =
@@ -50,11 +52,11 @@ export const SearchRestaurantScreen = () => {
     try {
       const result = await googlePlacesApi.request({
         method: 'get',
-        url: `/autocomplete/json?input=${search.term}&key=${GOOGLE_API_KEY}`,
+        url: `/nearbysearch/json?location=${latitude}%2C${longitude}&radius=${radius}&type=restaurant&key=${GOOGLE_API_KEY}`,
       });
       if (result) {
-        setPredictions(result.data.predictions);
-        console.log(result.data.predictions);
+        // setPredictions(result.results);
+        console.log(result);
         setShowPredictions(true);
       }
     } catch (e) {
@@ -65,10 +67,12 @@ export const SearchRestaurantScreen = () => {
   useDebounce(onChangeText, 300, [search.term]);
 
   const onSelection = async (placeId: string, description: string) => {
+    //  url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY',
+
     try {
       const result = await googlePlacesApi.request({
         method: 'get',
-        url: `/details/json?place_id=${placeId}&key=${GOOGLE_API_KEY}`,
+        url: `/nearbysearch/json?location=${latitude}%2C${longitude}&radius=${radius}&type=restaurant&key=${GOOGLE_API_KEY}`,
       });
       if (result) {
         const {
@@ -79,7 +83,7 @@ export const SearchRestaurantScreen = () => {
           },
         } = result;
         const {lat, lng} = location;
-        setSelectedLocation({latitude: lat, longitude: lng});
+        // setSelectedLocation({latitude: lat, longitude: lng});
         setShowPredictions(false);
         setSearch({term: description, fetchPredictions: false});
       }
@@ -120,7 +124,7 @@ export const SearchRestaurantScreen = () => {
           onClearSearch={onClearSearch}
           onSelection={onSelection}
         />
-        <Map selectedLocation={selectedLocation} />
+        {/* <Map selectedLocation={selectedLocation} /> */}
       </Container>
     </>
   );
