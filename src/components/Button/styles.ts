@@ -17,4 +17,5 @@ export const Label = styled.Text`
   text-transform: uppercase;
   font-family: ${({theme}: StyledProps) => theme.fonts.robotoBold};
   color: ${({theme}: StyledProps) => theme.colors.text.inverse};
+  letter-spacing: 2px;
 `;

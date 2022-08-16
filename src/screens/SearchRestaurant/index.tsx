@@ -69,6 +69,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState<Restaurant[]>([]);
   const [radius, setRadius] = useState(1000);
+  const [tempRadius, setTempRadius] = useState(1000);
   const [searchOpen, setSearchOpen] = useState(true);
   const [restaurant, setRestaurant] = useState<Restaurant | undefined>();
 
@@ -123,7 +124,12 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
     setDetailModalVisible(false);
   };
 
-  const onSelectRadius = (radiusValue: number) => setRadius(radiusValue);
+  const onSelectRadius = (radiusValue: number) => setTempRadius(radiusValue);
+
+  const onConfirmRadius = () => {
+    setRadius(tempRadius);
+    setRadiusModalVisible(false);
+  };
 
   const handleRadiusModal = () => setRadiusModalVisible(state => !state);
 
@@ -200,12 +206,15 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
                 restaurante
               </ModalSubtitle>
             </ModalTitleWrapper>
-            <RadiusSelector selectedValue={radius} onSelect={onSelectRadius} />
-            <Map selectedLocation={user.location} radius={radius} />
+            <RadiusSelector
+              selectedValue={tempRadius}
+              onSelect={onSelectRadius}
+            />
+            <Map selectedLocation={user.location} radius={tempRadius} />
             <ButtonComponent
               accessibilityLabel="aplicar"
               title="aplicar"
-              onPress={() => {}}
+              onPress={onConfirmRadius}
             />
           </ModalContainer>
         </ModalBackground>
@@ -213,7 +222,7 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
 
       <Modal
         visible={detailModalVisible}
-        animationType="fade"
+        animationType="slide"
         transparent
         onRequestClose={handleDetailModal}>
         <DetailModalContainer onPress={handleDetailModal}>
