@@ -1,5 +1,5 @@
 import {FC, useState} from 'react';
-import {Modal, Pressable, Keyboard} from 'react-native';
+import {Modal, Pressable, Keyboard, Alert} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {GOOGLE_API_KEY} from 'react-native-dotenv';
 
@@ -80,6 +80,9 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
     }
 
     try {
+      if (Math.random() < 0.2) {
+        throw new Error();
+      }
       const result = await googlePlacesApi.request({
         method: 'get',
         url: `/nearbysearch/json?location=${latitude}%2C${longitude}&radius=${radius}&type=restaurant&opennow=${searchOpen}&key=${GOOGLE_API_KEY}`,
@@ -89,8 +92,8 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
         console.log(result.data.results);
         setShowResults(true);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (_) {
+      return Alert.alert('Hubo un error, vuelva a intentar');
     }
   };
 

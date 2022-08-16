@@ -57,6 +57,9 @@ export const AddLocationScreen: FC<AddLocationScreenProps> = () => {
     }
 
     try {
+      if (Math.random() < 0.2) {
+        throw new Error();
+      }
       const result = await googlePlacesApi.request({
         method: 'get',
         url: `/autocomplete/json?input=${search.term}&key=${GOOGLE_API_KEY}`,
@@ -66,8 +69,8 @@ export const AddLocationScreen: FC<AddLocationScreenProps> = () => {
         console.log(result.data.predictions);
         setShowPredictions(true);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (_) {
+      return Alert.alert('Hubo un error, vuelva a intentar');
     }
   };
 

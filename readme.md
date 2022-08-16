@@ -43,5 +43,9 @@ react-native-svg\
 
 <br/>
 
+## Note:
+
+Search must throw an error 2 out of 10 times.
+
 <br/>
 <br/>
