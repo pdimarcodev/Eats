@@ -13,10 +13,18 @@ import {
 } from './styles';
 import {Rate} from '@components/Rate';
 
+/**
+ * Types
+ */
+
 interface RestaurantCardProps {
   data?: any;
   isFirst?: boolean;
 }
+
+/**
+ * RestaurantCard
+ */
 
 export const RestaurantCard: FC<RestaurantCardProps> = ({data, isFirst}) => {
   return (

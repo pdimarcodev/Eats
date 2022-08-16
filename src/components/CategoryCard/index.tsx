@@ -2,10 +2,18 @@ import {FC} from 'react';
 
 import {CardImage, Container, Title} from './styles';
 
+/**
+ * Types
+ */
+
 interface CategoryCardProps {
   data?: any;
   isFirst?: boolean;
 }
+
+/**
+ * CategoryCard
+ */
 
 export const CategoryCard: FC<CategoryCardProps> = ({data, isFirst}) => {
   return (
