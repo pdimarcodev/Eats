@@ -21,7 +21,7 @@ type MapProps = {
  * Constants
  */
 
-const DELTA = 0.02;
+const DELTA = 0.03;
 
 /**
  * Map Component

@@ -42,6 +42,7 @@ import {RootStackParams} from '@navigation/Home';
 import {Icon as IconComponent} from '@components/Icon';
 import {Spacer} from '@components/Spacer';
 import {RadiusSelector} from '@components/RadiusSelector';
+import {ButtonComponent} from '@components/Button';
 
 /**
  * Types
@@ -201,6 +202,11 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
             </ModalTitleWrapper>
             <RadiusSelector selectedValue={radius} onSelect={onSelectRadius} />
             <Map selectedLocation={user.location} radius={radius} />
+            <ButtonComponent
+              accessibilityLabel="aplicar"
+              title="aplicar"
+              onPress={() => {}}
+            />
           </ModalContainer>
         </ModalBackground>
       </Modal>
