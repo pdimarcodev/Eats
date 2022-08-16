@@ -1,4 +1,5 @@
 import {FC, useCallback, useEffect} from 'react';
+import {Alert} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 
 import {RootStackParams} from '@navigation/Home';
@@ -25,9 +26,8 @@ import {
 import {restaurants, categories, favorites} from './mocks/mocks';
 import {Spacer} from '@components/Spacer';
 import {ShowIf} from '@components/ShowIf';
-import {useUserContext} from 'context/UserContext';
-import {Alert} from 'react-native';
 import {AnimatedBike} from '@components/AnimatedBike';
+import {useUserContext} from 'context/UserContext';
 
 /**
  * Types
@@ -71,7 +71,6 @@ export const HomeScreen: FC<HomeScreenProps> = ({
             <TitleBottom>Eats</TitleBottom>
             <Subtitle>DELIVER APP</Subtitle>
           </Hero>
-
           <AnimatedBike>
             <Bike
               source={require('../../../assets/images/delivery-guy.png')}
