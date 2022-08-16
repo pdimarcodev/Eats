@@ -36,12 +36,21 @@ export const Subtitle = styled.Text`
   color: ${({theme}: StyledProps) => theme.colors.text.sextiary};
 `;
 
-export const HandImage = styled.Image`
+export const HandImage = styled.ImageBackground`
   position: absolute;
   width: 180px;
   height: 170px;
-  bottom: 0;
+  bottom: 0px;
   right: 30px;
+  z-index: 4;
+`;
+
+export const Bike = styled.Image`
+  position: absolute;
+  width: 100px;
+  height: 125px;
+  bottom: 0px;
+  right: 50px;
 `;
 
 export const AddAddress = styled.Pressable`

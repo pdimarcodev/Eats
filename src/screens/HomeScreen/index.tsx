@@ -11,6 +11,7 @@ import {
   AddAddressText,
   AddressTitle,
   AddressWrapper,
+  Bike,
   Container,
   HandImage,
   Header,
@@ -26,6 +27,7 @@ import {Spacer} from '@components/Spacer';
 import {ShowIf} from '@components/ShowIf';
 import {useUserContext} from 'context/UserContext';
 import {Alert} from 'react-native';
+import {AnimatedBike} from '@components/AnimatedBike';
 
 /**
  * Types
@@ -69,6 +71,13 @@ export const HomeScreen: FC<HomeScreenProps> = ({
             <TitleBottom>Eats</TitleBottom>
             <Subtitle>DELIVER APP</Subtitle>
           </Hero>
+
+          <AnimatedBike>
+            <Bike
+              source={require('../../../assets/images/delivery-guy.png')}
+              resizeMode="contain"
+            />
+          </AnimatedBike>
           <HandImage
             source={require('../../../assets/images/hand.png')}
             resizeMode="contain"
