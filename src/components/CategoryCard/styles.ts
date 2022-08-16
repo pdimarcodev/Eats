@@ -8,7 +8,6 @@ interface ContainerProps extends StyledProps {
 export const Container = styled.View<ContainerProps>`
   width: 217px;
   height: 105px;
-  margin-left: 15px;
   border-radius: 18px;
   overflow: hidden;
   margin-left: ${({isFirst}) => (isFirst ? '15px' : '10px')};
