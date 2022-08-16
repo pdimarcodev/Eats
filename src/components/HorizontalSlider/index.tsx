@@ -2,16 +2,21 @@ import {FC, cloneElement, ReactElement} from 'react';
 import {FlatList} from 'react-native';
 
 import {RestaurantCard} from '@components/RestaurantCard';
-import {Container, Title} from './styles';
 import {CategoryCard} from '@components/CategoryCard';
 import {Spacer} from '@components/Spacer';
 import {FavoriteCard} from '@components/FavoriteCard';
+import {Container, Title} from './styles';
 
 /**
  * Types
  */
 
 type CardType = 'restaurant' | 'category' | 'favorite';
+
+type CardItem = {
+  item: any;
+  index: number;
+};
 
 interface HorizontalSliderProps {
   title: string;
@@ -40,9 +45,10 @@ export const HorizontalSlider: FC<HorizontalSliderProps> = ({
 }) => {
   const card = CardMapper[type];
 
-  const renderItem = ({item}: {item: any}) =>
+  const renderItem = ({item, index}: CardItem) =>
     cloneElement(card, {
       data: item,
+      isFirst: index === 0,
     });
 
   return (

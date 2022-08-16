@@ -1,15 +1,19 @@
 import styled from 'styled-components/native';
 import {StyledProps} from '@interfaces';
 
-export const Container = styled.View`
+interface ContainerProps extends StyledProps {
+  isFirst?: boolean;
+}
+
+export const Container = styled.View<ContainerProps>`
   height: 165px;
   width: 245px;
   margin-top: 5px;
-  margin-left: 15px;
+  margin-left: ${({isFirst}) => (isFirst ? '15px' : '10px')};
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
-  background-color: ${({theme}: StyledProps) => theme.colors.bg.primary};
+  background-color: ${({theme}) => theme.colors.bg.primary};
 `;
 
 export const CardImage = styled.ImageBackground`

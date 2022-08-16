@@ -15,11 +15,12 @@ import {Rate} from '@components/Rate';
 
 interface RestaurantCardProps {
   data?: any;
+  isFirst?: boolean;
 }
 
-export const RestaurantCard: FC<RestaurantCardProps> = ({data}) => {
+export const RestaurantCard: FC<RestaurantCardProps> = ({data, isFirst}) => {
   return (
-    <Container>
+    <Container isFirst={isFirst}>
       <CardImage source={data.icon} />
 
       <InfoWrapper>

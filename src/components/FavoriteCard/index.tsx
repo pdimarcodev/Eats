@@ -20,15 +20,16 @@ import {
 
 interface FavoriteCardProps {
   data?: any;
+  isFirst?: boolean;
 }
 
 /**
  * FavoriteCard
  */
 
-export const FavoriteCard: FC<FavoriteCardProps> = ({data}) => {
+export const FavoriteCard: FC<FavoriteCardProps> = ({data, isFirst}) => {
   return (
-    <Container>
+    <Container isFirst={isFirst}>
       <CardImage source={data.image} resizeMode="cover">
         <Logo source={data.icon} />
         <WhiteBar />

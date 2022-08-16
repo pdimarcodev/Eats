@@ -1,8 +1,12 @@
 import styled from 'styled-components/native';
 import {StyledProps} from '@interfaces';
 
-export const Container = styled.View`
-  margin-left: 15px;
+interface ContainerProps extends StyledProps {
+  isFirst?: boolean;
+}
+
+export const Container = styled.View<ContainerProps>`
+  margin-left: ${({isFirst}) => (isFirst ? '15px' : '10px')};
 `;
 
 export const CardImage = styled.Image`
