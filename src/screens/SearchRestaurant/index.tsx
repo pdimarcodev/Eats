@@ -1,11 +1,8 @@
-import {FC, useEffect, useState} from 'react';
-import {Alert, Modal, Platform, Pressable, Keyboard} from 'react-native';
+import {FC, useState} from 'react';
+import {Modal, Pressable, Keyboard} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
-import {PERMISSIONS, PermissionStatus, request} from 'react-native-permissions';
 import {GOOGLE_API_KEY} from 'react-native-dotenv';
 
-import {Map} from '@components/Map';
-import {Spinner} from '@components/Spinner';
 import {
   Address,
   Back,
@@ -31,18 +28,19 @@ import {
   TextWrapper,
   Title,
 } from './styles';
-import googlePlacesApi from '@client/googlePlaces';
-import {SearchBar} from '@components/SearchBar';
-import {useDebounce, useLocation} from '@hooks';
+import {useDebounce} from '@hooks';
 import {Restaurant} from '@interfaces';
 import {colors} from '@theme/colors';
-import {StatusBarComponent} from '@components/StatusBar';
 import {useUserContext} from 'context/UserContext';
 import {RootStackParams} from '@navigation/Home';
+import {Map} from '@components/Map';
+import {SearchBar} from '@components/SearchBar';
+import {StatusBarComponent} from '@components/StatusBar';
 import {Icon as IconComponent} from '@components/Icon';
 import {Spacer} from '@components/Spacer';
 import {RadiusSelector} from '@components/RadiusSelector';
 import {ButtonComponent} from '@components/Button';
+import googlePlacesApi from '@client/googlePlaces';
 
 /**
  * Types
@@ -61,8 +59,6 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
   navigation: {goBack},
 }) => {
   const {user} = useUserContext();
-  useLocation();
-  const [permissionStatus, setPermissionStatus] = useState<PermissionStatus>();
   const [radiusModalVisible, setRadiusModalVisible] = useState(false);
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [search, setSearch] = useState({term: '', fetch: false});
@@ -74,19 +70,6 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
   const [restaurant, setRestaurant] = useState<Restaurant | undefined>();
 
   const {latitude, longitude} = user.location || {};
-
-  const checkLocationPermissions = async () => {
-    const permission =
-      Platform.OS === 'android'
-        ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
-        : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE;
-    try {
-      const status = await request(permission);
-      setPermissionStatus(status);
-    } catch (error) {
-      Alert.alert('Error', (error as Error).message);
-    }
-  };
 
   const onChangeText = async () => {
     if (search.term.trim() === '') {
@@ -134,14 +117,6 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
   const handleRadiusModal = () => setRadiusModalVisible(state => !state);
 
   const handleDetailModal = () => setDetailModalVisible(state => !state);
-
-  useEffect(() => {
-    checkLocationPermissions();
-  }, []);
-
-  if (permissionStatus !== 'granted' || !user.location) {
-    return <Spinner />;
-  }
 
   return (
     <>
