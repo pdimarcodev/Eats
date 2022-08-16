@@ -21,11 +21,13 @@ npx react-native run-ios
 
 npm run ios -- --device
 
-## Watch demo:
-
 <br/>
 
-<img src="./demo/QRtest.png" width="300"/>
+## Watch demo:
+
+## [Link to video](https://youtu.be/zq6UwN6AnXA)
+
+don't miss the bike animation at the beginning 🙂
 
 <br/>
 
