@@ -38,21 +38,16 @@ interface SearchBarProps {
   onSelection: (item: any) => void;
 }
 
-interface LocationItemsProps {
-  data: Prediction[];
-  onSelection: (item: Prediction) => void;
-}
-
-interface RestaurantItemsProps {
-  data: Restaurant[];
-  onSelection: (item: Restaurant) => void;
+interface ItemsProps<P> {
+  data: P[];
+  onSelection: (item: P) => void;
 }
 
 /**
  * LocationItems
  */
 
-const LocationItems: FC<LocationItemsProps> = ({data, onSelection}) => (
+const LocationItems: FC<ItemsProps<Prediction>> = ({data, onSelection}) => (
   <FlatList
     data={data}
     renderItem={({item}) => {
@@ -79,7 +74,7 @@ const LocationItems: FC<LocationItemsProps> = ({data, onSelection}) => (
  * RestaurantItems
  */
 
-const RestaurantItems: FC<RestaurantItemsProps> = ({data, onSelection}) => (
+const RestaurantItems: FC<ItemsProps<Restaurant>> = ({data, onSelection}) => (
   <FlatList
     data={data}
     renderItem={({item}) => {

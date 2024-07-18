@@ -57,9 +57,6 @@ export const AddLocationScreen: FC<AddLocationScreenProps> = () => {
     }
 
     try {
-      if (Math.random() < 0.2) {
-        throw new Error();
-      }
       const result = await googlePlacesApi.request({
         method: 'get',
         url: `/autocomplete/json?input=${search.term}&key=${GOOGLE_API_KEY}`,

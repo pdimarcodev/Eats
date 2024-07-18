@@ -80,16 +80,12 @@ export const SearchRestaurantScreen: FC<SearchRestaurantScreen> = ({
     }
 
     try {
-      if (Math.random() < 0.2) {
-        throw new Error();
-      }
       const result = await googlePlacesApi.request({
         method: 'get',
         url: `/nearbysearch/json?location=${latitude}%2C${longitude}&radius=${radius}&type=restaurant&opennow=${searchOpen}&key=${GOOGLE_API_KEY}`,
       });
       if (result) {
         setResults(result.data.results);
-        console.log(result.data.results);
         setShowResults(true);
       }
     } catch (_) {
